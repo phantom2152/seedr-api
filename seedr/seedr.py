@@ -1,5 +1,5 @@
 import aiohttp
-
+import asyncio
 
 seedrApiUrl = "https://www.seedr.cc/oauth_test/resource.php"
 
@@ -15,7 +15,9 @@ class seedr(object):
            'username': self.username,
            'password': self.password
         }
-        response = await postData(seedrApiUrl, data)
+        loop = asyncio.get_event_loop()
+        response = loop.run_until_complete(postData(seedrApiUrl, data))
+        loop.close()
         print(response)
 
     async def postData(self, url, data):
