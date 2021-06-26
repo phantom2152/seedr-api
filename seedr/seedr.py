@@ -15,6 +15,8 @@ class Seedr:
     def __init__(self, username, password):
         self.username = username
         self.password = password
+    
+    async def login(self):
         data = {
            'grant_type': 'password',
            'client_id': 'seedr_chrome',
@@ -22,7 +24,5 @@ class Seedr:
            'username': self.username,
            'password': self.password
         }
-        loop = asyncio.get_event_loop()
-        response = loop.run_until_complete(postData(seedrApiUrl, data))
-        loop.close()
+        response = await postData(seedrApiUrl, data)
         print(response)
