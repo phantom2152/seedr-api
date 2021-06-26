@@ -1,5 +1,0 @@
--r requirements.txt
-
-wheel
-setuptools
-twine
