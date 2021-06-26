@@ -4,7 +4,7 @@ import asyncio
 seedrApiUrl = "https://www.seedr.cc/oauth_test/resource.php"
 
 
-class seedr(object):
+class Seedr:
     def __int__(self, username, password):
         self.username = username
         self.password = password
