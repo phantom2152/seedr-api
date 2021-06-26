@@ -1,1 +1,1 @@
-from .seedr import seedr
+from .seedr import Seedr
