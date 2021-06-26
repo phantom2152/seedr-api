@@ -2,17 +2,25 @@ import aiohttp
 
 
 seedrApiUrl = "https://www.seedr.cc/oauth_test/resource.php"
-HEROKU_HEADERS = {"Accept": "application/json"; version=3.cedar-acm", "Content-Type": "application/json"}
 
 
 class seedr(object):
     def __int__(self, username, password):
         self.username = username
         self.password = password
+        data = {
+           'grant_type': 'password',
+           'client_id': 'seedr_chrome',
+           'action': 'login',
+           'username': self.username,
+           'password': self.password
+        }
+        response = await postData(seedrApiUrl, data)
+        print(response)
 
-    def postData(self, url, params):
+    async def postData(self, url, data):
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, params=params, raise_for_status=True) as response:
+            async with session.post(url, data=data) as response:
                 data = await response.json()
-                return data["shortenedUrl"]
+                return data
 
