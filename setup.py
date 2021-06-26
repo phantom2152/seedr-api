@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 setup(
     name='seedr',
-    packages=find_packages(include=['seedr']),
+    packages=['seedr-api'],
     version='0.1.0',
     description='Added web preview for links in copy method in pyrogram',
     author='Anonymous',
