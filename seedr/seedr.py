@@ -4,7 +4,7 @@ import asyncio
 seedrApiUrl = "https://www.seedr.cc/oauth_test/resource.php"
 
 
-async def postData(self, url, data):
+async def postData(url, data):
     async with aiohttp.ClientSession() as session:
         async with session.post(url, data=data) as response:
             data = await response.json()
