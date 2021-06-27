@@ -20,7 +20,7 @@ class Seedr:
         data = {
            'grant_type': 'password',
            'client_id': 'seedr_chrome',
-           'action': 'login',
+           'type': 'login',
            'username': self.username,
            'password': self.password
         }
