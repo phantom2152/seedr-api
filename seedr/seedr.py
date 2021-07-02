@@ -20,6 +20,7 @@ class Seedr:
     async def login(self):
         data = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
         response = await postData(seedrApiUrl, data)
+        print(response)
         self.token = response['access_token']
         return self.token
 
