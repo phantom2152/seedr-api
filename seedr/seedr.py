@@ -18,7 +18,7 @@ class Seedr:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 response = (await response.text()).encode().decode()
-                return json.load(response)
+                return json.loads(response)
 
     async def login(self):
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
