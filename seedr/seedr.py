@@ -1,5 +1,5 @@
+import json
 import aiohttp
-import asyncio
 
 
 class Seedr:
@@ -17,7 +17,8 @@ class Seedr:
     async def requestData(self, url):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                return await response.json()
+                response = await response.text().encode().decode()
+                return json.load(response)
 
     async def login(self):
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
