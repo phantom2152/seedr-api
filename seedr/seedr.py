@@ -23,12 +23,12 @@ class Seedr:
         self.token = response['access_token']
         return self.token
 
-    async addMagnet(self, magnet):
+    async def addMagnet(self, magnet):
         data = {'access_token': this.token, 'func': 'add_torrent', 'torrent_magnet': magnet}
         response = await postData(url, data)
         return response['data']
 
-    async getVideos():
+    async def getVideos():
         res = [];
         data = await postData(f"https://www.seedr.cc/api/folder?access_token={this.token}", None)
         print(data)
