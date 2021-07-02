@@ -33,9 +33,11 @@ class Seedr:
 
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
         response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
-        print(response)
+        if 'error_description' in response:
+            print(f"Error while logging into your account due to {response['error_description']}")
+            return False, response['error_description']
         self.token = response['access_token']
-        return self.token
+        return True, self.token
 
 
     async def addMagnet(self, magnet):
