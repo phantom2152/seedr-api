@@ -29,15 +29,14 @@ class Seedr:
     async def addMagnet(self, magnet):
         data = {'access_token': this.token, 'func': 'add_torrent', 'torrent_magnet': magnet}
         response = await self.postData(url, data)
-        return response['data']
+        return response
 
     async def getVideos(self):
         res = []
         data = await self.requestData(f"https://www.seedr.cc/api/folder?access_token={self.token}")
-        print(data)
-        for folder in data['data']['folders']:
+        for folder in data['folders']:
             response = await self.requestData(f"https://www.seedr.cc/api/folder/{folder['id']}?access_token={self.token}")
-            for video in response['data']['files']:
+            for video in response['files']:
                 print(video["play_video"])
                 if video["play_video"]:
                     res.append({fid: folder['id'], id: video['folder_file_id'], name: video['name']})
