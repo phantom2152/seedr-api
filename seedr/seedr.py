@@ -27,7 +27,7 @@ class Seedr:
 
     async def getVideos(self):
         res = [];
-        data = await self.postData(f"https://www.seedr.cc/api/folder?access_token={this.token}", None)
+        data = await self.postData(f"https://www.seedr.cc/api/folder?access_token={self.token}", None)
         print(data)
         """for folder in data.data.folders):
           res.push((await axios("https://www.seedr.cc/api/folder/" + folder.id + "?access_token=" + this.token)).data.files.filter(x => x["play_video"]).map(x => {
