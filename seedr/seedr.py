@@ -32,15 +32,12 @@ class Seedr:
         return response['data']
 
     async def getVideos(self):
-        res = [];
+        res = []
         data = await self.requestData(f"https://www.seedr.cc/api/folder?access_token={self.token}")
-        print(data)
-        """for folder in data.data.folders):
-          res.push((await axios("https://www.seedr.cc/api/folder/" + folder.id + "?access_token=" + this.token)).data.files.filter(x => x["play_video"]).map(x => {
-            return {
-              fid: folder.id,
-              id: x["folder_file_id"],
-              name: x.name
-            }"""
-
-    #return res;
+        for folder in data['data']['folders']:
+            response = await self.requestData(f"https://www.seedr.cc/api/folder/{folder['id']}?access_token={self.token}")
+            for video in response['data']['files']:
+                print(video["play_video"])
+                if video["play_video"]:
+                    res.append({fid: folder['id'], id: video['folder_file_id'], name: video['name']})
+        return res
