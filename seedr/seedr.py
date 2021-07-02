@@ -34,6 +34,7 @@ class Seedr:
     async def getVideos(self):
         res = []
         data = await self.requestData(f"https://www.seedr.cc/api/folder?access_token={self.token}")
+        print(data)
         for folder in data['data']['folders']:
             response = await self.requestData(f"https://www.seedr.cc/api/folder/{folder['id']}?access_token={self.token}")
             for video in response['data']['files']:
