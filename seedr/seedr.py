@@ -8,30 +8,46 @@ class Seedr:
         self.username = username
         self.password = password
 
+
     async def postData(self, url, payload):
+        """ Helps to post data"""
+
         headers = {'User-Agent': 'Mozilla/5.0'}
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, data=payload) as response:
-                return await response.json()
+                response = (await response.text()).encode().decode()
+                return json.loads(response)
+
 
     async def requestData(self, url):
+        """ Helps in getting http data"""
+
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 response = (await response.text()).encode().decode()
                 return json.loads(response)
 
+
     async def login(self):
+        """ Logging to seedr account and generating access token"""
+
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
         response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
         self.token = response['access_token']
         return self.token
 
+
     async def addMagnet(self, magnet):
+        """Adds the magent link to seedr"""
+
         data = {'access_token': this.token, 'func': 'add_torrent', 'torrent_magnet': magnet}
         response = await self.postData(url, data)
         return response
 
+
     async def getVideos(self):
+        """Sends you the all videos available in the seedr account from every folder"""
+
         res = []
         data = await self.requestData(f"https://www.seedr.cc/api/folder?access_token={self.token}")
         for folder in data['folders']:
@@ -40,3 +56,61 @@ class Seedr:
                 if video["play_video"]:
                     res.append({fid: folder['id'], id: video['folder_file_id'], name: video['name']})
         return res
+
+
+    async def getFilesById(self, id=None):
+        """ Get the all files and folders in a particular
+        folder by the folder id
+        You will get the homepage files if you didn't give id"""
+
+        url = f'https://www.seedr.cc/api/folder/${id}?access_token={self.token}' if id else f'https://www.seedr.cc/api/folder?access_token={self.token}'
+        data = await self.requestData(url)
+        parent = data['parent'] if data['parent'] != -1 else None
+        response = {parentId: parent, name: data['name'], folderSize: 0, totalStorage: data['space_max'], usedStorage: data['space_used'], type: data['type'], activeTorrents: data['torrents"], files: []}
+        for folder in data['folders']:
+            response['files'].append({
+                id: folder['id'],
+                type: 'folder',
+                name: folder['name'], 
+                size: folder['size']
+            })
+            try:
+                response['folderSize'] += int(folder['size'])
+            except:
+                pass
+        for file in data['files']:
+            response['files'].append({
+                id: file['folder_file_id'],
+                type: 'file',
+                name: file['name'],
+                size: file['size']
+            })
+            try:
+                response['folderSize'] += int(folder['size'])
+            except:
+                pass
+        return response
+
+
+    async def getFile(self, id):
+        """ Sends the details of the file by the file id"""
+
+        data = {'access_token': self.token, 'func': 'fetch_file', 'folder_file_id': id}
+        response = await postData('https://www.seedr.cc/oauth_test/resource.php', data)
+        return response
+
+
+    async def rename(self, id, newName):
+        """ Helps in renaming the files in seedr account"""
+
+        data = {'access_token': self.token, 'func': 'rename', 'rename_to': newName, 'file_id': id}
+        response = await postData('https://www.seedr.cc/oauth_test/resource.php', data)
+        return response
+
+
+    async def deleteFolder(self, id):
+        """ used to delete folders in seedr by folder id"""
+
+        data = {'access_token': self.token, 'func', 'delete', 'delete_arr': [{'type': 'folder', 'id': id}]}
+        response = await postData('https://www.seedr.cc/oauth_test/resource.php', data)
+        return response
