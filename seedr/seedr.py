@@ -9,16 +9,16 @@ class Seedr:
         self.username = username
         self.password = password
 
-    async def postData(self, url, data):
+    async def postData(self, url, payload):
         headers = {'User-Agent': 'Mozilla/5.0'}
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, headers=headers, data=data) as response:
+            async with session.post(url, headers=headers, data=payload) as response:
                 data = await response.json()
                 return data
 
     async def login(self):
-        data = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
-        response = await self.postData(seedrApiUrl, data)
+        payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
+        response = await self.postData(seedrApiUrl, payload)
         print(response)
         self.token = response['access_token']
         return self.token
