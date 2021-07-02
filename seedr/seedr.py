@@ -33,6 +33,7 @@ class Seedr:
 
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
         response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
+        print(response)
         self.token = response['access_token']
         return self.token
 
