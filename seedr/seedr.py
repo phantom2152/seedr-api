@@ -111,6 +111,6 @@ class Seedr:
     async def deleteFolder(self, id):
         """ used to delete folders in seedr by folder id"""
 
-        data = {'access_token': self.token, 'func', 'delete', 'delete_arr': [{'type': 'folder', 'id': id}]}
+        data = {'access_token': self.token, 'func': 'delete', 'delete_arr': [{'type': 'folder', 'id': id}]}
         response = await postData('https://www.seedr.cc/oauth_test/resource.php', data)
         return response
