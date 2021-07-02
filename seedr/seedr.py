@@ -66,7 +66,7 @@ class Seedr:
         url = f'https://www.seedr.cc/api/folder/${id}?access_token={self.token}' if id else f'https://www.seedr.cc/api/folder?access_token={self.token}'
         data = await self.requestData(url)
         parent = data['parent'] if data['parent'] != -1 else None
-        response = {parentId: parent, name: data['name'], folderSize: 0, totalStorage: data['space_max'], usedStorage: data['space_used'], type: data['type'], activeTorrents: data['torrents"], files: []}
+        response = {parentId: parent, name: data['name'], folderSize: 0, totalStorage: data['space_max'], usedStorage: data['space_used'], type: data['type'], activeTorrents: data['torrents'], files: []}
         for folder in data['folders']:
             response['files'].append({
                 id: folder['id'],
