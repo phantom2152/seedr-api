@@ -17,12 +17,9 @@ class Seedr:
         self.password = password
     
     async def login(self):
-        data = {
-           'grant_type': 'password',
-           'client_id': 'seedr_chrome',
-           'type': 'login',
-           'username': self.username,
-           'password': self.password
-        }
-        response = await postData(seedrApiUrl, data)
-        print(response)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
+        async with aiohttp.ClientSession() as session:
+            async with session.post('https://www.seedr.cc/oauth_test/token.php', headers=headers, data=payload) as resp:
+                self.token = (await resp.json())['access_token']
+                return self.token
