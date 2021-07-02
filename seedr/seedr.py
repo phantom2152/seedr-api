@@ -17,7 +17,7 @@ class Seedr:
     async def requestData(self, url):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                response = await response.text().encode().decode()
+                response = (await response.text()).encode().decode()
                 return json.load(response)
 
     async def login(self):
