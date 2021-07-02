@@ -1,7 +1,6 @@
 import aiohttp
 import asyncio
 
-seedrApiUrl = "https://www.seedr.cc/oauth_test/resource.php"
 
 class Seedr:
 
@@ -18,7 +17,6 @@ class Seedr:
     async def login(self):
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
         response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
-        print(response)
         self.token = response['access_token']
         return self.token
 
@@ -27,7 +25,7 @@ class Seedr:
         response = await self.postData(url, data)
         return response['data']
 
-    async def getVideos():
+    async def getVideos(self):
         res = [];
         data = await self.postData(f"https://www.seedr.cc/api/folder?access_token={this.token}", None)
         print(data)
