@@ -6,7 +6,7 @@ setup(
     description='Added web preview for links in copy method in pyrogram',
     author='Anonymous',
     license='MIT',
-    install_requires=['aiohttp[speedups]'],
+    install_requires=['aiohttp'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest==4.4.1'],
 )
