@@ -13,12 +13,11 @@ class Seedr:
         headers = {'User-Agent': 'Mozilla/5.0'}
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, data=payload) as response:
-                data = await response.json()
-                return data
+                return await response.json()
 
     async def login(self):
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
-        response = await self.postData(seedrApiUrl, payload)
+        response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
         print(response)
         self.token = response['access_token']
         return self.token
