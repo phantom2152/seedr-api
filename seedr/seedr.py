@@ -14,6 +14,11 @@ class Seedr:
             async with session.post(url, headers=headers, data=payload) as response:
                 return await response.json()
 
+    async def requestData(self, url):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                return await response.json()
+
     async def login(self):
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
         response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
@@ -27,7 +32,7 @@ class Seedr:
 
     async def getVideos(self):
         res = [];
-        data = await self.postData(f"https://www.seedr.cc/api/folder?access_token={self.token}", None)
+        data = await self.requestData(f"https://www.seedr.cc/api/folder?access_token={self.token}")
         print(data)
         """for folder in data.data.folders):
           res.push((await axios("https://www.seedr.cc/api/folder/" + folder.id + "?access_token=" + this.token)).data.files.filter(x => x["play_video"]).map(x => {
