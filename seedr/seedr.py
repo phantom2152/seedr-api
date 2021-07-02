@@ -37,7 +37,6 @@ class Seedr:
         for folder in data['folders']:
             response = await self.requestData(f"https://www.seedr.cc/api/folder/{folder['id']}?access_token={self.token}")
             for video in response['files']:
-                print(video["play_video"])
                 if video["play_video"]:
                     res.append({fid: folder['id'], id: video['folder_file_id'], name: video['name']})
         return res
