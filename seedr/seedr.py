@@ -1,9 +1,9 @@
 import aiohttp
 import asyncio
 
+seedrApiUrl = "https://www.seedr.cc/oauth_test/resource.php"
 
 class Seedr:
-    seedrApiUrl = "https://www.seedr.cc/oauth_test/resource.php"
 
     def __init__(self, username: str, password: str):
         self.username = username
