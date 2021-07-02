@@ -21,6 +21,11 @@ class Seedr:
         data = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
         response = await postData(seedrApiUrl, data)
         print(response)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, data=data) as response:
+                data = await response.json()
+                print(data)
         self.token = response['access_token']
         return self.token
 
