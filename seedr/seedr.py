@@ -16,8 +16,8 @@ class Seedr:
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, data=payload) as response:
                 try:
-                    response = (await response.text()).encode().decode()
-                    data = json.loads(response)
+                    res = (await response.text()).encode().decode()
+                    data = json.loads(res)
                 except:
                     data = await response.json()
                 return data
