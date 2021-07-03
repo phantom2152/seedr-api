@@ -20,8 +20,8 @@ class Seedr:
                     print(res)
                     data = json.loads(res)
                 except:
-                    data = await response.json()
-                return data
+                 #   data = await response.json()
+               # return data
 
 
     async def requestData(self, url):
@@ -36,7 +36,7 @@ class Seedr:
     async def login(self):
         """ Logging to seedr account and generating access token"""
 
-        payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username, 'password': self.password}
+        payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username.strip(), 'password': self.password.strip()}
         response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
         if 'error_description' in response:
             print(f"Error while logging into your account due to {response['error_description']}")
