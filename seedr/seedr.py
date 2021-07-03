@@ -42,20 +42,21 @@ class Seedr:
         return True, self.token
 
 
-    async getDeviceCode(self):
+    async def getDeviceCode(self):
         """ Generates device code"""
 
-        dc = await self.requestData("https://www.seedr.cc/api/device/code?client_id=seedr_xbmc");
-        self.devc = dc.data["device_code"];
-        self.usc = dc.data["user_code"];
+        dc = await self.requestData("https://www.seedr.cc/api/device/code?client_id=seedr_xbmc")
+        self.devc = dc["device_code"]
+        self.usc = dc["user_code"]
         print(f'Paste this code into Seedr {self.usc} || And here is your token {self.devc}')
         return self.usc, self.devc
 
 
-    async getToken(self, devc):
+    async def getToken(self, devc):
         """ Getting token from device code"""
-        token = await self.requestData("https://www.seedr.cc/api/device/authorize?device_code=" + devc + "&client_id=seedr_xbmc")
-        self.token = token.data["access_token"];
+
+        token = await self.requestData(f"https://www.seedr.cc/api/device/authorize?device_code={devc}&client_id=seedr_xbmc")
+        self.token = token["access_token"]
         return self.token
 
 
