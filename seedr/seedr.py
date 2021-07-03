@@ -15,14 +15,9 @@ class Seedr:
         headers = {'User-Agent': 'Mozilla/5.0'}
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, data=payload) as response:
-                try:
-                    res = (await response.text()).encode().decode()
-                    print(res)
-                    data = json.loads(res)
-                except:
-                    pass
-                 #   data = await response.json()
-               # return data
+                res = (await response.text()).encode().decode()
+                data = json.loads(res)
+                return data
 
 
     async def requestData(self, url):
@@ -38,7 +33,11 @@ class Seedr:
         """ Logging to seedr account and generating access token"""
 
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username.strip(), 'password': self.password.strip()}
-        response = await self.postData('https://www.seedr.cc/oauth_test/token.php', payload)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        async with aiohttp.ClientSession() as session:
+            async with session.post('https://www.seedr.cc/oauth_test/token.php', headers=headers, data=payload) as response:
+                response = await response.json()
+
         if 'error_description' in response:
             print(f"Error while logging into your account due to {response['error_description']}")
             return False, response['error_description']
