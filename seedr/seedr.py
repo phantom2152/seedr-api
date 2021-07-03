@@ -17,6 +17,7 @@ class Seedr:
             async with session.post(url, headers=headers, data=payload) as response:
                 try:
                     res = (await response.text()).encode().decode()
+                    print(res)
                     data = json.loads(res)
                 except:
                     data = await response.json()
