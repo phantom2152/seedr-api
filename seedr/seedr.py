@@ -33,7 +33,6 @@ class Seedr:
         """ Logging to seedr account and generating access token"""
 
         payload = {'grant_type': 'password', 'client_id': 'seedr_chrome', 'type': 'login', 'username': self.username.strip(), 'password': self.password.strip()}
-        headers = {'User-Agent': 'Mozilla/5.0'}
         response = await self.postData('https://www.seedr.cc/oauth_test/token.php', data=payload)
 
         if 'error_description' in response:
