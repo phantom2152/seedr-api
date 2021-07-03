@@ -15,8 +15,12 @@ class Seedr:
         headers = {'User-Agent': 'Mozilla/5.0'}
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, data=payload) as response:
-                response = (await response.text()).encode().decode()
-                return json.loads(response)
+                try:
+                    response = (await response.text()).encode().decode()
+                    data = json.loads(response)
+                except:
+                    data = await response.json()
+                return data
 
 
     async def requestData(self, url):
