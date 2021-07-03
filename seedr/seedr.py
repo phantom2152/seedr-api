@@ -36,7 +36,7 @@ class Seedr:
         headers = {'User-Agent': 'Mozilla/5.0'}
         async with aiohttp.ClientSession() as session:
             async with session.post('https://www.seedr.cc/oauth_test/token.php', headers=headers, data=payload) as response:
-                print(await response.text())
+                print(self.username.strip(), self.password.strip())
                 response = await response.json()
 
         if 'error_description' in response:
