@@ -20,6 +20,7 @@ class Seedr:
                     print(res)
                     data = json.loads(res)
                 except:
+                    pass
                  #   data = await response.json()
                # return data
 
